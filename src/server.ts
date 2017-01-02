@@ -1,8 +1,10 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
-import { Route } from './route/route';
-import { PingRoute } from './route/ping-route';
+import { Config } from './config';
+import { BridgeFactory } from './bridge/bridge-factory';
+
+import { RouteFactory } from './route/route-factory';
 
 class Server {
     public app: express.Application;
@@ -14,6 +16,7 @@ class Server {
     constructor() {
         this.app = express();
         this.config();
+        this.bridges();
         this.routes();
     }
 
@@ -27,15 +30,15 @@ class Server {
         });
     }
 
-    private routes(): void {
-        let router: express.Router = express.Router();
-        this.registerRoute(router, "/ping", new PingRoute());
-        this.app.use(router);
+    private bridges(): void {
+        let config: Config = Config.getInstance();
+        let bridgeConfigs: any[] = config.getConfig().bridges;
+        BridgeFactory.createBridges(bridgeConfigs);
     }
 
-    private registerRoute(router: express.Router, url: string, route: Route): void {
-        router.get(url, route.get.bind(route.get));
-        router.post(url, route.post.bind(route.post));
+    private routes(): void {
+        let router: express.Router = RouteFactory.createRouter();
+        this.app.use(router);
     }
 }
 

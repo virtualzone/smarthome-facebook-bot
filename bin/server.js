@@ -1,7 +1,9 @@
 "use strict";
 const express = require("express");
 const bodyParser = require("body-parser");
-const ping_route_1 = require("./route/ping-route");
+const config_1 = require("./config");
+const bridge_factory_1 = require("./bridge/bridge-factory");
+const route_factory_1 = require("./route/route-factory");
 class Server {
     static bootstrap() {
         return new Server();
@@ -9,6 +11,7 @@ class Server {
     constructor() {
         this.app = express();
         this.config();
+        this.bridges();
         this.routes();
     }
     config() {
@@ -20,14 +23,14 @@ class Server {
             next(err);
         });
     }
-    routes() {
-        let router = express.Router();
-        this.registerRoute(router, "/ping", new ping_route_1.PingRoute());
-        this.app.use(router);
+    bridges() {
+        let config = config_1.Config.getInstance();
+        let bridgeConfigs = config.getConfig().bridges;
+        bridge_factory_1.BridgeFactory.createBridges(bridgeConfigs);
     }
-    registerRoute(router, url, route) {
-        router.get(url, route.get.bind(route.get));
-        router.post(url, route.post.bind(route.post));
+    routes() {
+        let router = route_factory_1.RouteFactory.createRouter();
+        this.app.use(router);
     }
 }
 var server = Server.bootstrap();
