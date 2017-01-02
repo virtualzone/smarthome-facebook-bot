@@ -88,7 +88,7 @@ export class WebhookRoute extends Route {
 
     private getPageAccessToken(): string {
         let config: any = Config.getInstance().getConfig();
-        return config.facebook.pageAcccessToken;
+        return config.facebook.pageAccessToken;
     }
 
     private getVerifyToken(): string {
