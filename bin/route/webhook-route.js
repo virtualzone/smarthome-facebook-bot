@@ -17,27 +17,27 @@ class WebhookRoute extends route_1.Route {
     post(req, res, next) {
         let data = req.body;
         if (data.object === "page") {
-            data.entry.forEach(function (entry) {
-                let pageID = entry.id;
-                let timeOfEvent = entry.time;
-                entry.messaging.forEach(function (event) {
-                    if (event.message) {
-                        let senderID = event.sender.id;
-                        let recipientID = event.recipient.id;
-                        let timeOfMessage = event.timestamp;
-                        let message = event.message;
-                        console.log("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
-                        this.handleMessage(senderID, message);
-                    }
-                    else {
-                        console.log("Webhook received unknown event: ", event);
-                    }
-                });
-            });
+            for (let i = 0; i < data.entry.length; i++) {
+                let entry = data.entry[i];
+                this.handleEntry(entry);
+            }
         }
         res.sendStatus(200);
     }
-    handleMessage(senderID, message) {
+    handleEntry(entry) {
+        let pageID = entry.id;
+        let timeOfEvent = entry.time;
+        for (let i = 0; i < entry.messaging.length; i++) {
+            let event = entry.messaging[i];
+            this.handleMessage(event);
+        }
+    }
+    handleMessage(event) {
+        let senderID = event.sender.id;
+        let recipientID = event.recipient.id;
+        let timeOfMessage = event.timestamp;
+        let message = event.message;
+        console.log("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
         let id = message.mid;
         let text = message.text;
         let attachments = message.attachments;

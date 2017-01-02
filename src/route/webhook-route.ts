@@ -19,28 +19,32 @@ export class WebhookRoute extends Route {
     public post(req: express.Request, res: express.Response, next: express.NextFunction): void {
         let data = req.body;
         if (data.object === "page") {
-            data.entry.forEach(function(entry: any) {
-                let pageID = entry.id;
-                let timeOfEvent = entry.time;
-                entry.messaging.forEach(function(event: any) {
-                    if (event.message) {
-                        let senderID: string = event.sender.id;
-                        let recipientID: string = event.recipient.id;
-                        let timeOfMessage: string = event.timestamp;
-                        let message: any = event.message;
-                        console.log("Received message for user %d and page %d at %d with message:",
-                            senderID, recipientID, timeOfMessage);
-                        this.handleMessage(senderID, message);
-                    } else {
-                        console.log("Webhook received unknown event: ", event);
-                    }
-                });
-            });
+            for (let i=0; i<data.entry.length; i++) {
+                let entry: any = data.entry[i];
+                this.handleEntry(entry);
+            }
         }
         res.sendStatus(200);
     }
 
-    private handleMessage(senderID: string, message: any): void {
+    private handleEntry(entry: any): void {
+        let pageID = entry.id;
+        let timeOfEvent = entry.time;
+        for (let i=0; i<entry.messaging.length; i++) {
+            let event: any = entry.messaging[i];
+            this.handleMessage(event);
+        }
+    }
+
+    private handleMessage(event: any): void {
+        let senderID: string = event.sender.id;
+        let recipientID: string = event.recipient.id;
+        let timeOfMessage: string = event.timestamp;
+        let message: any = event.message;
+
+        console.log("Received message for user %d and page %d at %d with message:",
+                            senderID, recipientID, timeOfMessage);
+
         let id = message.mid;
         let text = message.text;
         let attachments = message.attachments;
