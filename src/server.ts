@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 
 import { Config } from './config';
 import { BridgeFactory } from './bridge/bridge-factory';
-
+import { CommandExecutor } from './command/command-executor';
 import { RouteFactory } from './route/route-factory';
 
 class Server {
