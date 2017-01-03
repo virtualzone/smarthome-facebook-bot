@@ -1,13 +1,19 @@
 "use strict";
 const switch_on_command_1 = require("./switch-on-command");
+const switch_off_command_1 = require("./switch-off-command");
 class CommandExecutor {
     static execute(s, bridge) {
+        let response;
         let cmd = CommandExecutor.selectCommand(s);
         if (cmd != null) {
             let result = cmd.regex.exec(s);
             let params = result.slice(1);
-            cmd.command.execute(bridge, params);
+            response = cmd.command.execute(bridge, params);
         }
+        else {
+            response = "Sorry, I didn't get that. Can you try to say that in other words?";
+        }
+        return response;
     }
     static selectCommand(s) {
         for (let i = 0; i < CommandExecutor.COMMANDS.length; i++) {
@@ -21,7 +27,8 @@ class CommandExecutor {
     }
 }
 CommandExecutor.COMMANDS = [
-    new switch_on_command_1.SwitchOnCommand()
+    new switch_on_command_1.SwitchOnCommand(),
+    new switch_off_command_1.SwitchOffCommand()
 ];
 exports.CommandExecutor = CommandExecutor;
 class MatchingCommand {

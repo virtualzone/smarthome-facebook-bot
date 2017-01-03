@@ -9,7 +9,7 @@ export abstract class Command {
 
     protected abstract getCommandRegexList(): string[];
 
-    public abstract execute(bridge: SmartHomeBridge, params: string[]): void;
+    public abstract execute(bridge: SmartHomeBridge, params: string[]): string;
 
     public getCompiledPatterns(): RegExp[] {
         return this.compiledPatterns;

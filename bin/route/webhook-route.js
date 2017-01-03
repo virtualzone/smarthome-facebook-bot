@@ -2,6 +2,9 @@
 const request = require("request");
 const route_1 = require("./route");
 const config_1 = require("../config");
+const language_tools_1 = require("../util/language-tools");
+const command_executor_1 = require("../command/command-executor");
+const bridge_factory_1 = require("../bridge/bridge-factory");
 class WebhookRoute extends route_1.Route {
     get(req, res, next) {
         if (req.query["hub.mode"] === "subscribe" &&
@@ -42,8 +45,14 @@ class WebhookRoute extends route_1.Route {
         let text = message.text;
         let attachments = message.attachments;
         if (text) {
-            let answer = "Thanks for your message! You wrote: " + text;
-            this.sendTextMessage(senderID, answer);
+            let commands = language_tools_1.LanguageTools.splitCommands(text);
+            let answers = new Array();
+            for (let i = 0; i < commands.length; i++) {
+                let s = commands[i];
+                let response = command_executor_1.CommandExecutor.execute(s, bridge_factory_1.BridgeFactory.getFirstBridge());
+                answers.push(response);
+            }
+            this.sendTextMessage(senderID, answers.join(" "));
         }
     }
     sendTextMessage(recipientId, text) {

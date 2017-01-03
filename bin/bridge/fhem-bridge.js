@@ -10,6 +10,15 @@ class FhemBridge extends bridge_1.SmartHomeBridge {
         this.username = config.username;
         this.password = config.password;
     }
+    switchOn(device) {
+        this.sendCommandToDevice(device, "on");
+    }
+    switchOff(device) {
+        this.sendCommandToDevice(device, "off");
+    }
+    setBlinds(device, level) {
+        this.sendCommandToDevice(device, String(level));
+    }
     sendCommandToDevice(device, action) {
         let cmd = `set ${device} ${action}`;
         console.log("Sending %s to %s", cmd, this.fhemUrl);

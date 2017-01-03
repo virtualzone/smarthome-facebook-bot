@@ -17,6 +17,18 @@ export class FhemBridge extends SmartHomeBridge {
         this.password = config.password;
     }
 
+    public switchOn(device: string): void {
+        this.sendCommandToDevice(device, "on");
+    }
+
+    public switchOff(device: string): void {
+        this.sendCommandToDevice(device, "off");
+    }
+
+    public setBlinds(device: string, level: number): void {
+        this.sendCommandToDevice(device, String(level));
+    }
+
     public sendCommandToDevice(device: string, action: string): void {
         let cmd: string = `set ${device} ${action}`;
         console.log("Sending %s to %s", cmd, this.fhemUrl);

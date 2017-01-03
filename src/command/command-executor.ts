@@ -1,19 +1,25 @@
 import { SmartHomeBridge } from "../bridge/bridge";
-import { Command } from './command';
-import { SwitchOnCommand } from './switch-on-command';
+import { Command } from "./command";
+import { SwitchOnCommand } from "./switch-on-command";
+import { SwitchOffCommand } from "./switch-off-command";
 
 export class CommandExecutor {
     private static COMMANDS: Command[] = [
-        new SwitchOnCommand()
+        new SwitchOnCommand(),
+        new SwitchOffCommand()
     ];
 
-    public static execute(s: string, bridge: SmartHomeBridge): void {
+    public static execute(s: string, bridge: SmartHomeBridge): string {
+        let response: string;
         let cmd: MatchingCommand = CommandExecutor.selectCommand(s);
         if (cmd != null) {
             let result: RegExpExecArray = cmd.regex.exec(s);
             let params: string[] = result.slice(1);
-            cmd.command.execute(bridge, params);
+            response = cmd.command.execute(bridge, params);
+        } else {
+            response = "Sorry, I didn't get that. Can you try to say that in other words?";
         }
+        return response;
     }
 
     private static selectCommand(s: string): MatchingCommand {

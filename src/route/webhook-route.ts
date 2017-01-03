@@ -1,8 +1,11 @@
 import * as request from "request";
-import { express } from 'express';
+import { express } from "express";
 
 import { Route } from "./route";
 import { Config } from "../config";
+import { LanguageTools } from "../util/language-tools";
+import { CommandExecutor } from "../command/command-executor";
+import { BridgeFactory } from "../bridge/bridge-factory";
 
 export class WebhookRoute extends Route {
     public get(req: express.Request, res: express.Response, next: express.NextFunction): void {
@@ -48,9 +51,16 @@ export class WebhookRoute extends Route {
         let id = message.mid;
         let text = message.text;
         let attachments = message.attachments;
+
         if (text) {
-            let answer = "Thanks for your message! You wrote: " + text;
-            this.sendTextMessage(senderID, answer);
+            let commands: string[] = LanguageTools.splitCommands(text);
+            let answers: string[] = new Array();
+            for (let i=0; i<commands.length; i++) {
+                let s: string = commands[i];
+                let response: string = CommandExecutor.execute(s, BridgeFactory.getFirstBridge()); // TODO
+                answers.push(response);
+            }
+            this.sendTextMessage(senderID, answers.join(" "));
         }
     }
 

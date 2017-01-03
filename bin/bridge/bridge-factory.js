@@ -1,6 +1,9 @@
 "use strict";
 const fhem_bridge_1 = require("./fhem-bridge");
 class BridgeFactory {
+    static getFirstBridge() {
+        return BridgeFactory.BRIDGES[0];
+    }
     static createBridges(bridgeConfigs) {
         console.log("Reading Bridge Configs...");
         for (let i = 0; i < bridgeConfigs.length; i++) {

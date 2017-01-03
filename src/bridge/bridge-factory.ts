@@ -4,6 +4,10 @@ import { FhemBridge } from "./fhem-bridge";
 export class BridgeFactory {
     private static BRIDGES: SmartHomeBridge[] = new Array();
 
+    public static getFirstBridge(): SmartHomeBridge {
+        return BridgeFactory.BRIDGES[0];
+    }
+
     public static createBridges(bridgeConfigs: any[]): void {
         console.log("Reading Bridge Configs...");
         for (let i=0; i<bridgeConfigs.length; i++) {

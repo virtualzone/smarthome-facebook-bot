@@ -16,8 +16,9 @@ export class SwitchOnCommand extends Command {
         ];
     }
 
-    public execute(bridge: SmartHomeBridge, params: string[]): void {
+    public execute(bridge: SmartHomeBridge, params: string[]): string {
         let device: string = params[0];
-        // TODO
+        bridge.switchOn(device);
+        return `Okay, I've switched ${device} on.`;
     }
 }
