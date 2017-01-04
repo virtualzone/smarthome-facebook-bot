@@ -1,6 +1,8 @@
 "use strict";
 const switch_on_command_1 = require("./switch-on-command");
 const switch_off_command_1 = require("./switch-off-command");
+const blinds_open_command_1 = require("./blinds-open-command");
+const blinds_close_command_1 = require("./blinds-close-command");
 const setup_command_1 = require("./setup-command");
 const hello_command_1 = require("./hello-command");
 class CommandExecutor {
@@ -30,10 +32,12 @@ class CommandExecutor {
     }
 }
 CommandExecutor.COMMANDS = [
+    new hello_command_1.HelloCommand(),
+    new setup_command_1.SetupCommand(),
     new switch_on_command_1.SwitchOnCommand(),
     new switch_off_command_1.SwitchOffCommand(),
-    new setup_command_1.SetupCommand(),
-    new hello_command_1.HelloCommand()
+    new blinds_open_command_1.BlindsOpenCommand(),
+    new blinds_close_command_1.BlindsCloseCommand()
 ];
 exports.CommandExecutor = CommandExecutor;
 class MatchingCommand {
