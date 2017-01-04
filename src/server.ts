@@ -1,10 +1,13 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
-import { Config } from './config';
+import { Config } from './util/config';
+import { Database } from './util/database';
 import { BridgeFactory } from './bridge/bridge-factory';
 import { CommandExecutor } from './command/command-executor';
 import { RouteFactory } from './route/route-factory';
+
+import { User } from './model/user';
 
 class Server {
     public app: express.Application;
@@ -16,8 +19,14 @@ class Server {
     constructor() {
         this.app = express();
         this.config();
-        this.bridges();
-        this.routes();
+        Database.connect()
+            .then(() => {
+                this.bridges();
+                this.routes();
+            })
+            .catch(err => {
+                throw err;
+            });
     }
 
     private config(): void {

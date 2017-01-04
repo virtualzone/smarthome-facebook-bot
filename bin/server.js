@@ -1,7 +1,8 @@
 "use strict";
 const express = require("express");
 const bodyParser = require("body-parser");
-const config_1 = require("./config");
+const config_1 = require("./util/config");
+const database_1 = require("./util/database");
 const bridge_factory_1 = require("./bridge/bridge-factory");
 const route_factory_1 = require("./route/route-factory");
 class Server {
@@ -11,8 +12,14 @@ class Server {
     constructor() {
         this.app = express();
         this.config();
-        this.bridges();
-        this.routes();
+        database_1.Database.connect()
+            .then(() => {
+            this.bridges();
+            this.routes();
+        })
+            .catch(err => {
+            throw err;
+        });
     }
     config() {
         this.app.use(bodyParser.json());

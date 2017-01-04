@@ -14,9 +14,8 @@ class SwitchOffCommand extends command_1.Command {
             "(.+) aus"
         ];
     }
-    execute(bridge, params) {
+    execute(user, params) {
         let device = params[0];
-        bridge.switchOff(device);
         return `Okay, I've switched ${device} off.`;
     }
 }

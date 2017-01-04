@@ -1,4 +1,4 @@
-import { SmartHomeBridge } from "../bridge/bridge";
+import { User } from "../model/user";
 
 export abstract class Command {
     private compiledPatterns: RegExp[] = [];
@@ -9,7 +9,7 @@ export abstract class Command {
 
     protected abstract getCommandRegexList(): string[];
 
-    public abstract execute(bridge: SmartHomeBridge, params: string[]): string;
+    public abstract execute(user: User, params: string[]): string;
 
     public getCompiledPatterns(): RegExp[] {
         return this.compiledPatterns;
@@ -30,7 +30,7 @@ export abstract class Command {
         let regexes: string[] = this.getCommandRegexList();
         for (let i=0; i<regexes.length; i++) {
             let regex: string = regexes[i];
-            let pattern: RegExp = new RegExp(regex, "i");
+            let pattern: RegExp = new RegExp("^" + regex + "$", "i");
             this.compiledPatterns.push(pattern);
         }
     }

@@ -1,21 +1,25 @@
-import { SmartHomeBridge } from "../bridge/bridge";
+import { User } from "../model/user";
 import { Command } from "./command";
 import { SwitchOnCommand } from "./switch-on-command";
 import { SwitchOffCommand } from "./switch-off-command";
+import { SetupCommand } from "./setup-command";
+import { HelloCommand } from "./hello-command";
 
 export class CommandExecutor {
     private static COMMANDS: Command[] = [
         new SwitchOnCommand(),
-        new SwitchOffCommand()
+        new SwitchOffCommand(),
+        new SetupCommand(),
+        new HelloCommand()
     ];
 
-    public static execute(s: string, bridge: SmartHomeBridge): string {
+    public static execute(user: User, s: string): string {
         let response: string;
         let cmd: MatchingCommand = CommandExecutor.selectCommand(s);
         if (cmd != null) {
             let result: RegExpExecArray = cmd.regex.exec(s);
             let params: string[] = result.slice(1);
-            response = cmd.command.execute(bridge, params);
+            response = cmd.command.execute(user, params);
         } else {
             response = "Sorry, I didn't get that. Can you try to say that in other words?";
         }

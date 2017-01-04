@@ -1,10 +1,10 @@
 "use strict";
 const request = require("request");
 const route_1 = require("./route");
-const config_1 = require("../config");
+const config_1 = require("../util/config");
+const user_1 = require("../model/user");
 const language_tools_1 = require("../util/language-tools");
 const command_executor_1 = require("../command/command-executor");
-const bridge_factory_1 = require("../bridge/bridge-factory");
 class WebhookRoute extends route_1.Route {
     get(req, res, next) {
         if (req.query["hub.mode"] === "subscribe" &&
@@ -40,19 +40,25 @@ class WebhookRoute extends route_1.Route {
         let recipientID = event.recipient.id;
         let timeOfMessage = event.timestamp;
         let message = event.message;
-        console.log("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
         let id = message.mid;
         let text = message.text;
         let attachments = message.attachments;
+        console.log("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
+        this.processText(senderID, text);
+    }
+    processText(senderID, text) {
         if (text) {
-            let commands = language_tools_1.LanguageTools.splitCommands(text);
-            let answers = new Array();
-            for (let i = 0; i < commands.length; i++) {
-                let s = commands[i];
-                let response = command_executor_1.CommandExecutor.execute(s, bridge_factory_1.BridgeFactory.getFirstBridge());
-                answers.push(response);
-            }
-            this.sendTextMessage(senderID, answers.join(" "));
+            user_1.User.loadOrCreate(senderID)
+                .then(user => {
+                let commands = language_tools_1.LanguageTools.splitCommands(text);
+                let answers = new Array();
+                for (let i = 0; i < commands.length; i++) {
+                    let s = commands[i];
+                    let response = command_executor_1.CommandExecutor.execute(user, s);
+                    answers.push(response);
+                }
+                this.sendTextMessage(senderID, answers.join(" "));
+            });
         }
     }
     sendTextMessage(recipientId, text) {

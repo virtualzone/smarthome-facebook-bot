@@ -4,6 +4,21 @@ import "mocha";
 import { LanguageTools } from "../src/util/language-tools";
 
 describe("LaguageTools", () => {
+    describe("#splitCommands", () => {
+        it("should split and reduce large commands correctly", () => {
+            let input: string = "Hello! How are you? Please   switch on my Kitchen.Lamp1. " +
+                "Then close the blinds in the living room and turn on the lights!";
+            let output: string[] = LanguageTools.splitCommands(input);
+            expect(output).is.an("array");
+            expect(output).to.have.length(5);
+            expect(output[0]).to.equal("Hello");
+            expect(output[1]).to.equal("How are you");
+            expect(output[2]).to.equal("switch on my Kitchen.Lamp1");
+            expect(output[3]).to.equal("close blinds in living room");
+            expect(output[4]).to.equal("turn on lights");
+        });
+    });
+
     describe("#splitSentences", () => {
         it("should split simple strings", () => {
             let input: string = "Hello! How are you?";
@@ -31,7 +46,7 @@ describe("LaguageTools", () => {
 
         it("should not remove dots without space", () => {
             let input: string = "Turn on Kitchen.Lamp1";
-            let output: string[] = LanguageTools.splitSentences(input);
+            let output: string[] = LanguageTools.splitSentences(input);
             expect(output).is.an("array");
             expect(output).to.have.length(1);
             expect(output[0]).to.equal("Turn on Kitchen.Lamp1");
@@ -43,6 +58,12 @@ describe("LaguageTools", () => {
             let input: string = "   this     is a  test ";
             let output: string = LanguageTools.normalize(input);
             expect(output).to.equal("this is a test");
+        });
+
+        it("should not transform the case", () => {
+            let input: string = "This Is a TesT";
+            let output: string = LanguageTools.normalize(input);
+            expect(output).to.equal(input);
         });
     });
 

@@ -1,5 +1,5 @@
 import { Command } from "./command";
-import { SmartHomeBridge } from "../bridge/bridge";
+import { User } from "../model/user";
 
 export class SwitchOffCommand extends Command {
     protected getCommandRegexList(): string[] {
@@ -16,9 +16,9 @@ export class SwitchOffCommand extends Command {
         ];
     }
 
-    public execute(bridge: SmartHomeBridge, params: string[]): string {
+    public execute(user: User, params: string[]): string {
         let device: string = params[0];
-        bridge.switchOff(device);
+        //bridge.switchOff(device);
         return `Okay, I've switched ${device} off.`;
     }
 }

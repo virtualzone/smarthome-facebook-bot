@@ -2,10 +2,10 @@ import * as request from "request";
 import { express } from "express";
 
 import { Route } from "./route";
-import { Config } from "../config";
+import { Config } from "../util/config";
+import { User } from "../model/user";
 import { LanguageTools } from "../util/language-tools";
 import { CommandExecutor } from "../command/command-executor";
-import { BridgeFactory } from "../bridge/bridge-factory";
 
 export class WebhookRoute extends Route {
     public get(req: express.Request, res: express.Response, next: express.NextFunction): void {
@@ -44,23 +44,28 @@ export class WebhookRoute extends Route {
         let recipientID: string = event.recipient.id;
         let timeOfMessage: string = event.timestamp;
         let message: any = event.message;
-
-        console.log("Received message for user %d and page %d at %d with message:",
-                            senderID, recipientID, timeOfMessage);
-
         let id = message.mid;
         let text = message.text;
         let attachments = message.attachments;
 
+        console.log("Received message for user %d and page %d at %d with message:",
+                            senderID, recipientID, timeOfMessage);
+        this.processText(senderID, text);
+    }
+
+    private processText(senderID: string, text: string) {
         if (text) {
-            let commands: string[] = LanguageTools.splitCommands(text);
-            let answers: string[] = new Array();
-            for (let i=0; i<commands.length; i++) {
-                let s: string = commands[i];
-                let response: string = CommandExecutor.execute(s, BridgeFactory.getFirstBridge()); // TODO
-                answers.push(response);
-            }
-            this.sendTextMessage(senderID, answers.join(" "));
+            User.loadOrCreate(senderID)
+                .then(user => {
+                    let commands: string[] = LanguageTools.splitCommands(text);
+                    let answers: string[] = new Array();
+                    for (let i=0; i<commands.length; i++) {
+                        let s: string = commands[i];
+                        let response: string = CommandExecutor.execute(user, s);
+                        answers.push(response);
+                    }
+                    this.sendTextMessage(senderID, answers.join(" "));
+                });
         }
     }
 

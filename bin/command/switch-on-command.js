@@ -14,9 +14,8 @@ class SwitchOnCommand extends command_1.Command {
             "(.+) an"
         ];
     }
-    execute(bridge, params) {
+    execute(user, params) {
         let device = params[0];
-        bridge.switchOn(device);
         return `Okay, I've switched ${device} on.`;
     }
 }

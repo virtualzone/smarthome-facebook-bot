@@ -21,7 +21,7 @@ class Command {
         let regexes = this.getCommandRegexList();
         for (let i = 0; i < regexes.length; i++) {
             let regex = regexes[i];
-            let pattern = new RegExp(regex, "i");
+            let pattern = new RegExp("^" + regex + "$", "i");
             this.compiledPatterns.push(pattern);
         }
     }
