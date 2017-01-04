@@ -4,17 +4,17 @@ import { User } from "../model/user";
 export class HelloCommand extends Command {
     protected getCommandRegexList(): string[] {
         return [
-            "hello(\s.*)",
-            "hallo(\s.*)",
-            "guten tag(\s.*)",
-            "servus(\s.*)",
-            "cheers(\s.*)",
-            "hi there(\s.*)",
-            "hi(\s.*)",
-            "good morning(\s.*)",
-            "good day(\s.*)",
-            "good afternoon(\s.*)",
-            "huhu(\s.*)"
+            "hello(\\s.*)*",
+            "hallo(\\s.*)*",
+            "guten tag(\\s.*)*",
+            "servus(\\s.*)*",
+            "cheers(\\s.*)*",
+            "hi there(\\s.*)*",
+            "hi(\\s.*)*",
+            "good morning(\\s.*)*",
+            "good day(\\s.*)*",
+            "good afternoon(\\s.*)*",
+            "huhu(\\s.*)*"
         ];
     }
 
