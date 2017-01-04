@@ -4,7 +4,9 @@ class SwitchOnCommand extends command_1.Command {
     getCommandRegexList() {
         return [
             "turn (.+) on",
+            "turn on (.+)",
             "switch (.+) on",
+            "switch on (.+)",
             "(.+) on",
             "schalte (.+) an",
             "schalte (.+) ein",

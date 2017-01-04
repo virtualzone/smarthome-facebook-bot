@@ -5,7 +5,9 @@ export class SwitchOffCommand extends Command {
     protected getCommandRegexList(): string[] {
         return [
             "turn (.+) off",
+            "turn off (.+)",
             "switch (.+) off",
+            "switch off (.+)",
             "(.+) off",
             "schalte (.+) aus",
             "schalte (.+) ab",
