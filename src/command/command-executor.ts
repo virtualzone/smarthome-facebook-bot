@@ -9,6 +9,7 @@ import { BlindsCloseCommand } from "./blinds-close-command";
 import { BlindsSetCommand } from "./blinds-set-command";
 import { AliasAddCommand } from "./alias-add-command";
 import { AliasRemoveCommand } from "./alias-remove-command";
+import { HelpCommand } from "./help-command";
 
 export class CommandExecutor {
     private static COMMANDS: Command[] = [
@@ -20,7 +21,8 @@ export class CommandExecutor {
         new BlindsCloseCommand(),
         new BlindsSetCommand(),
         new AliasAddCommand(),
-        new AliasRemoveCommand()
+        new AliasRemoveCommand(),
+        new HelpCommand()
     ];
 
     public static execute(user: User, s: string): Promise<string> {
