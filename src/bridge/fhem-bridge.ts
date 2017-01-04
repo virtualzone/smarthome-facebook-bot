@@ -44,9 +44,11 @@ export class FhemBridge extends SmartHomeBridge {
                 .get(this.fhemUrl, (err, response) => {
                     if (err) {
                         resolve(false);
+                        return;
                     }
-                    if (response.statusCode >= 400 && response.statusCode <= 599) {
+                    if (!response || (response.statusCode >= 400 && response.statusCode <= 599)) {
                         resolve(false);
+                        return;
                     }
                     resolve(true);
                 })
