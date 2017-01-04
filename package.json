@@ -1,7 +1,7 @@
 {
   "name": "smarthome-facebook-bot",
   "version": "1.0.0",
-  "description": "A facebook bot for controlling smart homes.",
+  "description": "A Facebook bot for controlling smart homes.",
   "main": "index.js",
   "scripts": {
     "grunt": "grunt",
@@ -9,7 +9,14 @@
     "test": "mocha -r ts-node/register test/*.test.ts"
   },
   "author": "Heiner Peuser <heiner.peuser@weweave.net>",
-  "license": "ISC",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/weweave/smarthome-facebook-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/weweave/smarthome-facebook-bot/issues"
+  },
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
