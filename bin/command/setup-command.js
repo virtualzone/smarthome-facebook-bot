@@ -7,9 +7,7 @@ class SetupCommand extends command_1.Command {
             "setup (.+) (.+) (.+) (.+)",
             "setup (.+) (.+)",
             "set up (.+) (.+) (.+) (.+)",
-            "setup (.+) (.+)",
-            "add (.+) (.+) (.+) (.+)",
-            "add (.+) (.+)"
+            "setup (.+) (.+)"
         ];
     }
     execute(user, params) {

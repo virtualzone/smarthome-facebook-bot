@@ -8,9 +8,7 @@ export class SetupCommand extends Command {
             "setup (.+) (.+) (.+) (.+)",
             "setup (.+) (.+)",
             "set up (.+) (.+) (.+) (.+)",
-            "setup (.+) (.+)",
-            "add (.+) (.+) (.+) (.+)",
-            "add (.+) (.+)"
+            "setup (.+) (.+)"
         ];
     }
 
