@@ -1,12 +1,14 @@
 import { User } from "../model/user";
 import { Command } from "./command";
+import { HelloCommand } from "./hello-command";
+import { SetupCommand } from "./setup-command";
 import { SwitchOnCommand } from "./switch-on-command";
 import { SwitchOffCommand } from "./switch-off-command";
 import { BlindsOpenCommand } from "./blinds-open-command";
 import { BlindsCloseCommand } from "./blinds-close-command";
 import { BlindsSetCommand } from "./blinds-set-command";
-import { SetupCommand } from "./setup-command";
-import { HelloCommand } from "./hello-command";
+import { AliasAddCommand } from "./alias-add-command";
+import { AliasRemoveCommand } from "./alias-remove-command";
 
 export class CommandExecutor {
     private static COMMANDS: Command[] = [
@@ -16,7 +18,9 @@ export class CommandExecutor {
         new SwitchOffCommand(),
         new BlindsOpenCommand(),
         new BlindsCloseCommand(),
-        new BlindsSetCommand()
+        new BlindsSetCommand(),
+        new AliasAddCommand(),
+        new AliasRemoveCommand()
     ];
 
     public static execute(user: User, s: string): Promise<string> {

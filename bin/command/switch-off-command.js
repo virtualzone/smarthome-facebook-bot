@@ -20,7 +20,7 @@ class SwitchOffCommand extends command_1.Command {
                 resolve("Please setup a smart home system first.");
             }
             else {
-                let device = params[0];
+                let device = user.resolveAlias(params[0]);
                 user.getFirstBridge().switchOff(device);
                 resolve(`Okay, I've switched ${device} off.`);
             }

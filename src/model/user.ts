@@ -7,6 +7,7 @@ export class User {
     public facebookUserId: string = "";
     public name: string = "";
     public bridges: SmartHomeBridge[] = new Array();
+    public aliases: any = new Object();
 
     constructor(facebookUserId: string) {
         this.facebookUserId = facebookUserId;
@@ -21,6 +22,21 @@ export class User {
             return null;
         }
         return this.bridges[0];
+    }
+
+    public addAlias(alias: string, device: string): void {
+        this.aliases[alias] = device;
+    }
+
+    public resolveAlias(alias: string): string {
+        if (alias in this.aliases) {
+            return this.aliases[alias];
+        }
+        return alias;
+    }
+
+    public removeAlias(alias: string): void {
+        delete this.aliases[alias];
     }
 
     public save(): Promise<User> {
@@ -69,13 +85,17 @@ export class User {
         return {
             _id: this.facebookUserId,
             name: this.name,
-            bridges: bridges
+            bridges: bridges,
+            aliases: this.aliases
         };
     }
 
     public dbToUser(result: any): void {
         this.name = result.name;
         this.bridges = BridgeFactory.createBridges(result.bridges);
+        if ("aliases" in result) {
+            this.aliases = result.aliases;
+        }
     }
 
     private static existsUser(facebookUserId: string): Promise<boolean> {

@@ -6,6 +6,7 @@ class User {
         this.facebookUserId = "";
         this.name = "";
         this.bridges = new Array();
+        this.aliases = new Object();
         this.facebookUserId = facebookUserId;
     }
     hasBridges() {
@@ -16,6 +17,18 @@ class User {
             return null;
         }
         return this.bridges[0];
+    }
+    addAlias(alias, device) {
+        this.aliases[alias] = device;
+    }
+    resolveAlias(alias) {
+        if (alias in this.aliases) {
+            return this.aliases[alias];
+        }
+        return alias;
+    }
+    removeAlias(alias) {
+        delete this.aliases[alias];
     }
     save() {
         return new Promise((resolve) => {
@@ -61,12 +74,16 @@ class User {
         return {
             _id: this.facebookUserId,
             name: this.name,
-            bridges: bridges
+            bridges: bridges,
+            aliases: this.aliases
         };
     }
     dbToUser(result) {
         this.name = result.name;
         this.bridges = bridge_factory_1.BridgeFactory.createBridges(result.bridges);
+        if ("aliases" in result) {
+            this.aliases = result.aliases;
+        }
     }
     static existsUser(facebookUserId) {
         return new Promise((resolve) => {

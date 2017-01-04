@@ -20,7 +20,7 @@ export class BlindsCloseCommand extends Command {
             if (!user.hasBridges()) {
                 resolve("Please setup a smart home system first.");
             } else {
-                let device: string = params[0];
+                let device: string = user.resolveAlias(params[0]);
                 user.getFirstBridge().setBlinds(device, 0);
                 resolve(`Okay, I've closed blind ${device}.`);
             }

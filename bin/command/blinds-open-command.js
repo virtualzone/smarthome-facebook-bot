@@ -20,7 +20,7 @@ class BlindsOpenCommand extends command_1.Command {
                 resolve("Please setup a smart home system first.");
             }
             else {
-                let device = params[0];
+                let device = user.resolveAlias(params[0]);
                 user.getFirstBridge().setBlinds(device, 100);
                 resolve(`Okay, I've opened blind ${device}.`);
             }

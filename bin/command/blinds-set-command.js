@@ -1,8 +1,7 @@
-import { Command } from "./command";
-import { User } from "../model/user";
-
-export class BlindsSetCommand extends Command {
-    protected getCommandRegexList(): string[] {
+"use strict";
+const command_1 = require("./command");
+class BlindsSetCommand extends command_1.Command {
+    getCommandRegexList() {
         return [
             "set (.+) to (\\d+) percent",
             "set (.+) to (\\d+) %",
@@ -12,17 +11,18 @@ export class BlindsSetCommand extends Command {
             "fahre (.+) auf (\\d+)%"
         ];
     }
-
-    public execute(user: User, params: string[]): Promise<string> {
+    execute(user, params) {
         return new Promise((resolve) => {
             if (!user.hasBridges()) {
                 resolve("Please setup a smart home system first.");
-            } else {
-                let device: string = user.resolveAlias(params[0]);
-                let num: number = parseInt(params[1]);
+            }
+            else {
+                let device = user.resolveAlias(params[0]);
+                let num = parseInt(params[1]);
                 user.getFirstBridge().setBlinds(device, num);
                 resolve(`Okay, I've set blind ${device} to ${num}%.`);
             }
         });
     }
 }
+exports.BlindsSetCommand = BlindsSetCommand;

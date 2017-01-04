@@ -21,7 +21,7 @@ export class SwitchOnCommand extends Command {
             if (!user.hasBridges()) {
                 resolve("Please setup a smart home system first.");
             } else {
-                let device: string = params[0];
+                let device: string = user.resolveAlias(params[0]);
                 user.getFirstBridge().switchOn(device);
                 resolve(`Okay, I've switched ${device} on.`);
             }

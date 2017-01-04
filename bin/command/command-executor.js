@@ -1,10 +1,13 @@
 "use strict";
+const hello_command_1 = require("./hello-command");
+const setup_command_1 = require("./setup-command");
 const switch_on_command_1 = require("./switch-on-command");
 const switch_off_command_1 = require("./switch-off-command");
 const blinds_open_command_1 = require("./blinds-open-command");
 const blinds_close_command_1 = require("./blinds-close-command");
-const setup_command_1 = require("./setup-command");
-const hello_command_1 = require("./hello-command");
+const blinds_set_command_1 = require("./blinds-set-command");
+const alias_add_command_1 = require("./alias-add-command");
+const alias_remove_command_1 = require("./alias-remove-command");
 class CommandExecutor {
     static execute(user, s) {
         return new Promise((resolve) => {
@@ -37,7 +40,10 @@ CommandExecutor.COMMANDS = [
     new switch_on_command_1.SwitchOnCommand(),
     new switch_off_command_1.SwitchOffCommand(),
     new blinds_open_command_1.BlindsOpenCommand(),
-    new blinds_close_command_1.BlindsCloseCommand()
+    new blinds_close_command_1.BlindsCloseCommand(),
+    new blinds_set_command_1.BlindsSetCommand(),
+    new alias_add_command_1.AliasAddCommand(),
+    new alias_remove_command_1.AliasRemoveCommand()
 ];
 exports.CommandExecutor = CommandExecutor;
 class MatchingCommand {
