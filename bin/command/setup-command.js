@@ -14,10 +14,12 @@ class SetupCommand extends command_1.Command {
         return new Promise((resolve) => {
             if (user.hasBridges()) {
                 resolve("I'm sorry! I can only handle one smart home system for you. Please remove it first if you want to set up another one.");
+                return;
             }
             let system = params[0].toLowerCase();
             if (system !== "fhem" && system !== "test") {
                 resolve("I'm sorry! I can't work with that system yet. I currently can talk with: fhem");
+                return;
             }
             let url = params[1];
             let username = (params.length == 4 ? params[2] : "");

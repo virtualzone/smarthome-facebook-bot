@@ -23,7 +23,7 @@ class HelpCommand extends command_1.Command {
     }
     execute(user, params) {
         return new Promise((resolve) => {
-            resolve("You can use the following commands when talking to me. I understand some variants of them:\n" +
+            resolve("You can use the following commands when talking to me. I also understand some variants of them:\n" +
                 this.getHelpEntries().join("\n"));
         });
     }
