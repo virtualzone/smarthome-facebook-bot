@@ -25,7 +25,7 @@ export class HelpCommand extends Command {
 
     public execute(user: User, params: string[]): Promise<string> {
         return new Promise((resolve) => {
-            resolve("You can use the following commands when talking to me. I understand some variants of them:\n" +
+            resolve("You can use the following commands when talking to me. I also understand some variants of them:\n" +
                 this.getHelpEntries().join("\n"));
         });
     }

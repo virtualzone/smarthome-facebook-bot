@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<svg width="740" height="740" xmlns="http://www.w3.org/2000/svg" style="vector-effect: non-scaling-stroke;" stroke="null">
+ <metadata stroke="null" id="metadata7">image/svg+xml</metadata>
+ <g stroke="null">
+  <title stroke="null">background</title>
+  <rect stroke="null" fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g stroke="null">
+  <title stroke="null">Layer 1</title>
+  <g style="vector-effect: non-scaling-stroke;" stroke="null" id="layer1">
+   <path style="vector-effect: non-scaling-stroke;" stroke="#000000" fill="none" stroke-width="46.733719" stroke-miterlimit="4" id="path2985" d="m369.856781,23.399384c-141.977341,-2.054626 -278.291939,93.489655 -325.40839,227.491943c-49.762059,131.463623 -9.270088,290.833771 98.694431,381.368439c106.183838,94.894165 272.277679,111.595703 395.519775,40.675415c121.895508,-65.902222 194.168762,-209.87381 174.868896,-346.992401c-16.349426,-143.541168 -132.128174,-268.292694 -273.854584,-295.499878c-22.955841,-4.703888 -46.389435,-7.046753 -69.820129,-7.043549l0,0.000031z"/>
+   <g stroke="null" id="svg_6">
+    <g id="svg_4" fill="#000000" transform="matrix(1.89986 0 0 -1.89986 -195.338 408.549)">
+     <path stroke="null" id="svg_5" d="m202.568604,107.133919c-89,-89.999907 -89,-89.999907 -57,-89.999907l32,0l0,-70.00001l0,-70.000076l39,0l40,0l3,47.999992c3,47.000118 3,47.000118 38.000031,47.000118c35,0 35,0 38,-47.000118l3,-47.999992l40,0l39,0l0,70.000076l0,70.00001l32,0c32,0 32,0 -57,89.999907c-49,49.999992 -92,89.999992 -95,89.999992c-3,0 -46.000031,-40 -95.000031,-89.999992z"/>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>
