@@ -26,3 +26,7 @@ To get the bot up and running, you'll need:
 
 ## License
 The Smart Home Facebook Bot is licensed under the terms of the GPLv3.
+
+## Disclaimer
+There is no association with Facebook, Inc.
+Facebook is a registered trademark of Facebook, Inc.
