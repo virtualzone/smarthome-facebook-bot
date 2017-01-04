@@ -9,6 +9,8 @@ import { BlindsCloseCommand } from "./blinds-close-command";
 import { BlindsSetCommand } from "./blinds-set-command";
 import { AliasAddCommand } from "./alias-add-command";
 import { AliasRemoveCommand } from "./alias-remove-command";
+import { DeleteAccountConfirmedCommand } from "./delete-account-confirmed-command";
+import { DeleteAccountCommand } from "./delete-account-command";
 import { HelpCommand } from "./help-command";
 
 export class CommandExecutor {
@@ -22,6 +24,8 @@ export class CommandExecutor {
         new BlindsSetCommand(),
         new AliasAddCommand(),
         new AliasRemoveCommand(),
+        new DeleteAccountConfirmedCommand(),
+        new DeleteAccountCommand(),
         new HelpCommand()
     ];
 

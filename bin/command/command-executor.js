@@ -8,6 +8,8 @@ const blinds_close_command_1 = require("./blinds-close-command");
 const blinds_set_command_1 = require("./blinds-set-command");
 const alias_add_command_1 = require("./alias-add-command");
 const alias_remove_command_1 = require("./alias-remove-command");
+const delete_account_confirmed_command_1 = require("./delete-account-confirmed-command");
+const delete_account_command_1 = require("./delete-account-command");
 const help_command_1 = require("./help-command");
 class CommandExecutor {
     static execute(user, s) {
@@ -45,6 +47,8 @@ CommandExecutor.COMMANDS = [
     new blinds_set_command_1.BlindsSetCommand(),
     new alias_add_command_1.AliasAddCommand(),
     new alias_remove_command_1.AliasRemoveCommand(),
+    new delete_account_confirmed_command_1.DeleteAccountConfirmedCommand(),
+    new delete_account_command_1.DeleteAccountCommand(),
     new help_command_1.HelpCommand()
 ];
 exports.CommandExecutor = CommandExecutor;
