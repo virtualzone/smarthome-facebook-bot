@@ -25,10 +25,12 @@ export class User {
     }
 
     public addAlias(alias: string, device: string): void {
+        alias = alias.toLowerCase().trim();
         this.aliases[alias] = device;
     }
 
     public resolveAlias(alias: string): string {
+        alias = alias.toLowerCase().trim();
         if (alias in this.aliases) {
             return this.aliases[alias];
         }
@@ -36,6 +38,7 @@ export class User {
     }
 
     public removeAlias(alias: string): void {
+        alias = alias.toLowerCase().trim();
         delete this.aliases[alias];
     }
 

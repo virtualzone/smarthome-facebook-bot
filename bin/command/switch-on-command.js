@@ -7,6 +7,7 @@ class SwitchOnCommand extends command_1.Command {
             "switch (.+) on",
             "(.+) on",
             "schalte (.+) an",
+            "schalte (.+) ein",
             "mach (.+) an",
             "mache (.+) an",
             "mach das (.+) an",

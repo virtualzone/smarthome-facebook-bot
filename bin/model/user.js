@@ -19,15 +19,18 @@ class User {
         return this.bridges[0];
     }
     addAlias(alias, device) {
+        alias = alias.toLowerCase().trim();
         this.aliases[alias] = device;
     }
     resolveAlias(alias) {
+        alias = alias.toLowerCase().trim();
         if (alias in this.aliases) {
             return this.aliases[alias];
         }
         return alias;
     }
     removeAlias(alias) {
+        alias = alias.toLowerCase().trim();
         delete this.aliases[alias];
     }
     save() {

@@ -8,6 +8,7 @@ export class SwitchOffCommand extends Command {
             "switch (.+) off",
             "(.+) off",
             "schalte (.+) aus",
+            "schalte (.+) ab",
             "mach (.+) aus",
             "mache (.+) aus",
             "mach das (.+) aus",

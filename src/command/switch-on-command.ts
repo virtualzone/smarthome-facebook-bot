@@ -8,6 +8,7 @@ export class SwitchOnCommand extends Command {
             "switch (.+) on",
             "(.+) on",
             "schalte (.+) an",
+            "schalte (.+) ein",
             "mach (.+) an",
             "mache (.+) an",
             "mach das (.+) an",
