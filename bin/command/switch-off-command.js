@@ -15,8 +15,16 @@ class SwitchOffCommand extends command_1.Command {
         ];
     }
     execute(user, params) {
-        let device = params[0];
-        return `Okay, I've switched ${device} off.`;
+        return new Promise((resolve) => {
+            if (!user.hasBridges()) {
+                resolve("Please setup a smart home system first.");
+            }
+            else {
+                let device = params[0];
+                user.getFirstBridge().switchOff(device);
+                resolve(`Okay, I've switched ${device} off.`);
+            }
+        });
     }
 }
 exports.SwitchOffCommand = SwitchOffCommand;

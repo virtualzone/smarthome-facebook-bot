@@ -18,9 +18,11 @@ export class HelloCommand extends Command {
         ];
     }
 
-    public execute(user: User, params: string[]): string {
-        return "Hello! Nice to have you here. You can talk to me to control your smart home.\n" +
-            "To set up your smart home system, type something like: Setup fhem https://my-smarthome:8443/fhem username password\n" +
-            "Please ask me for help at any time for a list of commands I understand.";
+    public execute(user: User, params: string[]): Promise<string> {
+        return new Promise((resolve) => {
+            resolve("Hello! Nice to have you here. You can talk to me to control your smart home.\n" +
+                "To set up your smart home system, type something like: Setup fhem https://my-smarthome:8443/fhem username password\n" +
+                "Please ask me for help at any time for a list of commands I understand.");
+        });
     }
 }

@@ -3,9 +3,9 @@ import * as request from "request";
 import { SmartHomeBridge } from "./bridge";
 
 export class FhemBridge extends SmartHomeBridge {
-    private fhemUrl: string;
-    private username: string;
-    private password: string;
+    public fhemUrl: string;
+    public username: string;
+    public password: string;
 
     constructor() {
         super();
@@ -15,6 +15,15 @@ export class FhemBridge extends SmartHomeBridge {
         this.fhemUrl = config.fhemUrl;
         this.username = config.username;
         this.password = config.password;
+    }
+
+    public getConfig(): any {
+        return {
+            type: "fhem",
+            fhemUrl: this.fhemUrl,
+            username: this.username,
+            password: this.password
+        };
     }
 
     public switchOn(device: string): void {
@@ -29,7 +38,23 @@ export class FhemBridge extends SmartHomeBridge {
         this.sendCommandToDevice(device, String(level));
     }
 
-    public sendCommandToDevice(device: string, action: string): void {
+    public checkConnection(): Promise<boolean> {
+        return new Promise((resolve) => {
+            request
+                .get(this.fhemUrl, (err, response) => {
+                    if (err) {
+                        resolve(false);
+                    }
+                    if (response.statusCode >= 400 && response.statusCode <= 599) {
+                        resolve(false);
+                    }
+                    resolve(true);
+                })
+                .auth(this.username, this.password, true);
+        });
+    }
+
+    private sendCommandToDevice(device: string, action: string): void {
         let cmd: string = `set ${device} ${action}`;
         console.log("Sending %s to %s", cmd, this.fhemUrl);
         let payload = {
@@ -38,7 +63,7 @@ export class FhemBridge extends SmartHomeBridge {
         request
             .post(this.fhemUrl, (err, response, body) => {
                 if (err) {
-                    throw err;
+                    console.error("Error: Received error while sending command to %s", this.fhemUrl);
                 }
                 if (response.statusCode >= 400 && response.statusCode <= 599) {
                     console.error("Error: Received HTTP Status %d from %s", response.statusCode, this.fhemUrl);

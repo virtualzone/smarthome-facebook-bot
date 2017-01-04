@@ -5,17 +5,18 @@ const setup_command_1 = require("./setup-command");
 const hello_command_1 = require("./hello-command");
 class CommandExecutor {
     static execute(user, s) {
-        let response;
-        let cmd = CommandExecutor.selectCommand(s);
-        if (cmd != null) {
-            let result = cmd.regex.exec(s);
-            let params = result.slice(1);
-            response = cmd.command.execute(user, params);
-        }
-        else {
-            response = "Sorry, I didn't get that. Can you try to say that in other words?";
-        }
-        return response;
+        return new Promise((resolve) => {
+            let response;
+            let cmd = CommandExecutor.selectCommand(s);
+            if (cmd != null) {
+                let result = cmd.regex.exec(s);
+                let params = result.slice(1);
+                cmd.command.execute(user, params).then(res => resolve(res));
+            }
+            else {
+                resolve("Sorry, I didn't get that. Can you try to say that in other words?");
+            }
+        });
     }
     static selectCommand(s) {
         for (let i = 0; i < CommandExecutor.COMMANDS.length; i++) {

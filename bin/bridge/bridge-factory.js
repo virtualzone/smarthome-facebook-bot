@@ -1,18 +1,17 @@
 "use strict";
 const fhem_bridge_1 = require("./fhem-bridge");
 class BridgeFactory {
-    static getFirstBridge() {
-        return BridgeFactory.BRIDGES[0];
-    }
     static createBridges(bridgeConfigs) {
-        console.log("Reading Bridge Configs...");
+        let result = new Array();
         for (let i = 0; i < bridgeConfigs.length; i++) {
             let bridgeConfig = bridgeConfigs[i];
             let type = bridgeConfig.type;
-            console.log("Bridge %d = %s", i, type.toLowerCase());
-            BridgeFactory.createBridge(type, bridgeConfig);
+            let bridge = BridgeFactory.createBridge(type, bridgeConfig);
+            if (bridge != null) {
+                result.push(bridge);
+            }
         }
-        console.log("Bridges instantiated.");
+        return result;
     }
     static createBridge(type, config) {
         let bridge;
@@ -20,11 +19,11 @@ class BridgeFactory {
             bridge = new fhem_bridge_1.FhemBridge();
         }
         else {
-            throw new Error("Unknown bridge type: " + type);
+            console.log("Unknown bridge type %s, skipping", type);
+            return null;
         }
         bridge.parseConfig(config);
-        BridgeFactory.BRIDGES.push(bridge);
+        return bridge;
     }
 }
-BridgeFactory.BRIDGES = new Array();
 exports.BridgeFactory = BridgeFactory;

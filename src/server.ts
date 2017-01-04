@@ -3,11 +3,7 @@ import * as bodyParser from 'body-parser';
 
 import { Config } from './util/config';
 import { Database } from './util/database';
-import { BridgeFactory } from './bridge/bridge-factory';
-import { CommandExecutor } from './command/command-executor';
 import { RouteFactory } from './route/route-factory';
-
-import { User } from './model/user';
 
 class Server {
     public app: express.Application;
@@ -21,7 +17,6 @@ class Server {
         this.config();
         Database.connect()
             .then(() => {
-                this.bridges();
                 this.routes();
             })
             .catch(err => {
@@ -37,12 +32,6 @@ class Server {
             err.status = 404;
             next(err);
         });
-    }
-
-    private bridges(): void {
-        let config: Config = Config.getInstance();
-        let bridgeConfigs: any[] = config.getConfig().bridges;
-        BridgeFactory.createBridges(bridgeConfigs);
     }
 
     private routes(): void {

@@ -1,4 +1,5 @@
 "use strict";
+const bridge_factory_1 = require("../bridge/bridge-factory");
 const database_1 = require("../util/database");
 class User {
     constructor(facebookUserId) {
@@ -6,6 +7,15 @@ class User {
         this.name = "";
         this.bridges = new Array();
         this.facebookUserId = facebookUserId;
+    }
+    hasBridges() {
+        return this.bridges.length > 0;
+    }
+    getFirstBridge() {
+        if (!this.hasBridges()) {
+            return null;
+        }
+        return this.bridges[0];
     }
     save() {
         return new Promise((resolve) => {
@@ -43,11 +53,20 @@ class User {
         });
     }
     getObjectForDb() {
+        let bridges = new Array();
+        for (let i = 0; i < this.bridges.length; i++) {
+            let bridge = this.bridges[i];
+            bridges.push(bridge.getConfig());
+        }
         return {
             _id: this.facebookUserId,
             name: this.name,
-            bridges: this.bridges
+            bridges: bridges
         };
+    }
+    dbToUser(result) {
+        this.name = result.name;
+        this.bridges = bridge_factory_1.BridgeFactory.createBridges(result.bridges);
     }
     static existsUser(facebookUserId) {
         return new Promise((resolve) => {
@@ -88,8 +107,7 @@ class User {
                     reject(err);
                 }
                 let user = new User(result._id);
-                user.name = result.name;
-                user.bridges = result.bridges;
+                user.dbToUser(result);
                 resolve(user);
             });
         });

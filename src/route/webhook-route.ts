@@ -58,13 +58,11 @@ export class WebhookRoute extends Route {
             User.loadOrCreate(senderID)
                 .then(user => {
                     let commands: string[] = LanguageTools.splitCommands(text);
-                    let answers: string[] = new Array();
                     for (let i=0; i<commands.length; i++) {
                         let s: string = commands[i];
-                        let response: string = CommandExecutor.execute(user, s);
-                        answers.push(response);
+                        CommandExecutor.execute(user, s)
+                            .then(answer => this.sendTextMessage(senderID, answer));
                     }
-                    this.sendTextMessage(senderID, answers.join(" "));
                 });
         }
     }

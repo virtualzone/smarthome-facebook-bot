@@ -1,5 +1,6 @@
 import { MongoError } from "mongodb";
 import { SmartHomeBridge } from "../bridge/bridge";
+import { BridgeFactory } from "../bridge/bridge-factory";
 import { Database } from "../util/database";
 
 export class User {
@@ -9,6 +10,17 @@ export class User {
 
     constructor(facebookUserId: string) {
         this.facebookUserId = facebookUserId;
+    }
+
+    public hasBridges(): boolean {
+        return this.bridges.length > 0;
+    }
+
+    public getFirstBridge(): SmartHomeBridge {
+        if (!this.hasBridges()) {
+            return null;
+        }
+        return this.bridges[0];
     }
 
     public save(): Promise<User> {
@@ -49,11 +61,21 @@ export class User {
     }
 
     private getObjectForDb(): any {
+        let bridges: any[] = new Array();
+        for (let i=0; i<this.bridges.length; i++) {
+            let bridge: SmartHomeBridge = this.bridges[i];
+            bridges.push(bridge.getConfig());
+        }
         return {
             _id: this.facebookUserId,
             name: this.name,
-            bridges: this.bridges
+            bridges: bridges
         };
+    }
+
+    public dbToUser(result: any): void {
+        this.name = result.name;
+        this.bridges = BridgeFactory.createBridges(result.bridges);
     }
 
     private static existsUser(facebookUserId: string): Promise<boolean> {
@@ -97,8 +119,7 @@ export class User {
                         reject(err);
                     }
                     let user: User = new User(result._id);
-                    user.name = result.name;
-                    user.bridges = result.bridges;
+                    user.dbToUser(result);
                     resolve(user);
                 });
         });

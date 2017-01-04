@@ -13,17 +13,18 @@ export class CommandExecutor {
         new HelloCommand()
     ];
 
-    public static execute(user: User, s: string): string {
-        let response: string;
-        let cmd: MatchingCommand = CommandExecutor.selectCommand(s);
-        if (cmd != null) {
-            let result: RegExpExecArray = cmd.regex.exec(s);
-            let params: string[] = result.slice(1);
-            response = cmd.command.execute(user, params);
-        } else {
-            response = "Sorry, I didn't get that. Can you try to say that in other words?";
-        }
-        return response;
+    public static execute(user: User, s: string): Promise<string> {
+        return new Promise((resolve) => {
+            let response: string;
+            let cmd: MatchingCommand = CommandExecutor.selectCommand(s);
+            if (cmd != null) {
+                let result: RegExpExecArray = cmd.regex.exec(s);
+                let params: string[] = result.slice(1);
+                cmd.command.execute(user, params).then(res => resolve(res));
+            } else {
+                resolve("Sorry, I didn't get that. Can you try to say that in other words?");
+            }
+        });
     }
 
     private static selectCommand(s: string): MatchingCommand {

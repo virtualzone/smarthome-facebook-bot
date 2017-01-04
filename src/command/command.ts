@@ -9,7 +9,7 @@ export abstract class Command {
 
     protected abstract getCommandRegexList(): string[];
 
-    public abstract execute(user: User, params: string[]): string;
+    public abstract execute(user: User, params: string[]): Promise<string>;
 
     public getCompiledPatterns(): RegExp[] {
         return this.compiledPatterns;

@@ -16,9 +16,15 @@ export class SwitchOnCommand extends Command {
         ];
     }
 
-    public execute(user: User, params: string[]): string {
-        let device: string = params[0];
-        //bridge.switchOn(device);
-        return `Okay, I've switched ${device} on.`;
+    public execute(user: User, params: string[]): Promise<string> {
+        return new Promise((resolve) => {
+            if (!user.hasBridges()) {
+                resolve("Please setup a smart home system first.");
+            } else {
+                let device: string = params[0];
+                user.getFirstBridge().switchOn(device);
+                resolve(`Okay, I've switched ${device} on.`);
+            }
+        });
     }
 }
