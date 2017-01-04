@@ -9,7 +9,7 @@ Here are some examples of commands the bot understands right now (and various va
 * Close the bathroom blinds.
 
 The following home automation systems are supported:
-* [FHEM]([http://fhem.de/)
+* [FHEM](http://fhem.de/)
 
 ## Requirements
 To get the bot up and running, you'll need:
