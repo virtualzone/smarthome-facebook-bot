@@ -2,7 +2,6 @@ target/
 **/.sass-cache
 **/.sass-cache/*
 build/
-etc/
 deployments/
 node/
 node_modules/

@@ -1,0 +1,12 @@
+{
+    "facebook": {
+        "verifyToken": "your-webhook-verify-token",
+        "pageAccessToken": "your-page-access-token"
+    },
+    "mongodb": {
+        "url": "mongodb://localhost:27017/smarthomebot",
+        "options": {
+            "auto_reconnect": true
+        }
+    }
+}
