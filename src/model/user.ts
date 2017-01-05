@@ -25,21 +25,22 @@ export class User {
     }
 
     public addAlias(alias: string, device: string): void {
-        alias = alias.toLowerCase().trim();
-        this.aliases[alias] = device;
+        let lowerAlias = alias.toLowerCase().trim();
+        this.aliases[lowerAlias] = device;
     }
 
     public resolveAlias(alias: string): string {
-        alias = alias.toLowerCase().trim();
-        if (alias in this.aliases) {
-            return this.aliases[alias];
+        let lowerAlias = alias.toLowerCase().trim();
+        if (lowerAlias in this.aliases) {
+            return this.aliases[lowerAlias];
+        } else {
+            return alias;
         }
-        return alias;
     }
 
     public removeAlias(alias: string): void {
-        alias = alias.toLowerCase().trim();
-        delete this.aliases[alias];
+        let lowerAlias = alias.toLowerCase().trim();
+        delete this.aliases[lowerAlias];
     }
 
     public save(): Promise<User> {

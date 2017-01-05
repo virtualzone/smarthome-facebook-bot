@@ -19,19 +19,21 @@ class User {
         return this.bridges[0];
     }
     addAlias(alias, device) {
-        alias = alias.toLowerCase().trim();
-        this.aliases[alias] = device;
+        let lowerAlias = alias.toLowerCase().trim();
+        this.aliases[lowerAlias] = device;
     }
     resolveAlias(alias) {
-        alias = alias.toLowerCase().trim();
-        if (alias in this.aliases) {
-            return this.aliases[alias];
+        let lowerAlias = alias.toLowerCase().trim();
+        if (lowerAlias in this.aliases) {
+            return this.aliases[lowerAlias];
         }
-        return alias;
+        else {
+            return alias;
+        }
     }
     removeAlias(alias) {
-        alias = alias.toLowerCase().trim();
-        delete this.aliases[alias];
+        let lowerAlias = alias.toLowerCase().trim();
+        delete this.aliases[lowerAlias];
     }
     save() {
         return new Promise((resolve) => {
