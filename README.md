@@ -1,6 +1,8 @@
 # Smart Home Bot for the Facebook Messenger Platform
 This is a bot for the Facebook Messenger Platform written in TypeScript which allows you to control your smart home system. You can use it to send commands to your smart home using the Facebook Messenger. For example, you can switch on/off lights and open/close blinds.
 
+__[You can use this app as "Vicky" for free on Facebook.](https://www.facebook.com/Vicky-1189592224423846/)__
+
 Here are some examples of commands the bot understands right now (and various variants of them):
 * Hello Bot!
 * Please help me.
